@@ -31,14 +31,11 @@ FIREFOX_BINARY = 'C:\\Program Files\\Mozilla Firefox\\firefox.exe'
 
 class TestAcademy(unittest.TestCase):
 
-    def __init__(self, test, browser):
+    def setUp(self):
 
         self.conf = reader.get_conf()
+        self.browser = self.conf.get('browser', 'Safari')
         self.locators = reader.get_locators()
-        self.browser = browser
-        super(TestAcademy, self).__init__(test)
-    
-    def setUp(self):
 
         if self.browser == 'Firefox':
             capabilities = webdriver.DesiredCapabilities().FIREFOX
@@ -71,18 +68,7 @@ class TestAcademy(unittest.TestCase):
 
 if __name__ == "__main__":
 
-    # default browser
-    browser = 'Safari'
-
-    # parse args
-    opts, args = getopt.getopt(sys.argv[1:], 'b:s', ['browser=', 'site='])
-    for opt, arg in opts:
-        if opt in ('-b', '--browser'):
-            browser = arg
-        elif opt in ('-s', '--site'):
-            site = arg
-
     suite = unittest.TestSuite()
-    suite.addTest(TestAcademy("testRegister", browser))
+    suite.addTest(TestAcademy("testRegister"))
     runner = unittest.TextTestRunner()
     runner.run(suite)
