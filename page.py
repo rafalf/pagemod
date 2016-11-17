@@ -18,6 +18,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from selenium import webdriver
 import os
 
 
@@ -28,7 +29,14 @@ class Page(unittest.TestCase):
         self.conf = conf
         self.locators = locators
 
-    def take_screenshots(self, file_name):
-        self.driver.save_screenshot(os.path.join(self.conf['screenshot_path'], file_name))
+    def take_screenshot(self, file_name):
+        self.driver.save_screenshot(os.path.join(self.conf.get('temp_path'), file_name))
+
+    def open_url(self, url):
+        self.driver.get(url)
+
+    def get_current_url(self):
+        return self.driver.current_url
+
 
 

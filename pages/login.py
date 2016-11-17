@@ -24,7 +24,7 @@ from page import Page
 WAIT_TIME = 10
 
 
-class Home(Page, unittest.TestCase):
+class Login(Page, unittest.TestCase):
 
     def __init__(self, driver, conf, locators):
         self.driver = driver
@@ -33,13 +33,17 @@ class Home(Page, unittest.TestCase):
 
     def wait_page_loaded(self):
         try:
-            selector_css= self.locators['register']
+            selector_css= self.locators.get('login_name')
             WebDriverWait(self.driver, WAIT_TIME).until(EC.presence_of_element_located((By.CSS_SELECTOR, selector_css)),
                                                     message='element not found: %s' % selector_css)
         except TimeoutException as e:
             self.fail(e)
 
-    def select_get_involved(self):
-        el = self.driver.find_element_by_css_selector(self.locators['register'])
+    def select_login(self):
+        el = self.driver.find_element_by_css_selector('#logInForm button')
         el.click()
+
+    def enter_user_name(self, name):
+        el = self.driver.find_element_by_css_selector(self.locators.get('login_name'))
+        el.send_keys(name)
 
