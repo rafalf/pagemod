@@ -28,11 +28,6 @@ from pages.home import Home
 from pages.login import Login
 
 
-CHROME_DRIVER_PATH = 'C:\\Private Projects\\drivers\\chromedriver.exe'
-IE_DRIVER_PATH = 'C:\\Private Projects\\drivers\\IEDriverServer.exe'
-FIREFOX_BINARY = 'C:\\Program Files\\Mozilla Firefox\\firefox.exe'
-
-
 class TestAcademy(unittest.TestCase):
 
     def setUp(self):
@@ -42,12 +37,12 @@ class TestAcademy(unittest.TestCase):
         self.locators = reader.get_locators()
 
         if self.browser == 'Firefox':
-            binary = FirefoxBinary(FIREFOX_BINARY)
+            binary = FirefoxBinary(reader.get_conf().get('firefox_binary'))
             self.driver = webdriver.Firefox(firefox_binary=binary)
         elif self.browser == 'Chrome':
-            self.driver = webdriver.Chrome(CHROME_DRIVER_PATH)
+            self.driver = webdriver.Chrome(reader.get_conf().get('chrome_driver'))
         elif self.browser == 'Ie':
-            self.driver = webdriver.Ie(executable_path=IE_DRIVER_PATH)
+            self.driver = webdriver.Ie(executable_path=reader.get_conf().get('ie_driver'))
         elif self.browser == 'Safari':
             self.driver = webdriver.Safari()
 
