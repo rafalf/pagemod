@@ -14,7 +14,7 @@
 
 import unittest
 import time
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -38,5 +38,20 @@ class Page(unittest.TestCase):
     def get_current_url(self):
         return self.driver.current_url
 
+    def get_validation_error(self):
 
+        try:
+            selector = 'field-validation-error'
+            return WebDriverWait(self.driver, 5).until(
+                EC.presence_of_element_located((By.CLASS_NAME, selector)), 'element timed out: %s' % selector)
+        except TimeoutException as e:
+            self.fail(e)
+
+    def get_element_by_css(self, selector_css):
+
+        try:
+            return WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((
+                By.CSS_SELECTOR, selector_css)), 'element timed out: %s' % selector_css)
+        except TimeoutException as e:
+            self.fail(e)
 

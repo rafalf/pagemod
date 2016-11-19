@@ -21,8 +21,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from page import Page
 
-WAIT_TIME = 10
-
 
 class Home(Page, unittest.TestCase):
 
@@ -33,13 +31,13 @@ class Home(Page, unittest.TestCase):
 
     def wait_page_loaded(self):
         try:
-            selector_css= self.locators['register']
-            WebDriverWait(self.driver, WAIT_TIME).until(EC.presence_of_element_located((By.CSS_SELECTOR, selector_css)),
-                                                    message='element not found: %s' % selector_css)
+            selector_css = self.locators.get('register')
+            WebDriverWait(self.driver, self.conf.get('page_timeout')).until(EC.presence_of_element_located((By.CSS_SELECTOR, selector_css)),
+                                                    message='element timed out: %s' % selector_css)
         except TimeoutException as e:
             self.fail(e)
 
     def select_get_involved(self):
-        el = self.driver.find_element_by_css_selector(self.locators['register'])
-        el.click()
+        selector_css = self.locators.get('register')
+        self.get_element_by_css(selector_css).click()
 

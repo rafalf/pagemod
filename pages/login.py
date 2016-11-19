@@ -21,8 +21,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from page import Page
 
-WAIT_TIME = 10
-
 
 class Login(Page, unittest.TestCase):
 
@@ -34,16 +32,16 @@ class Login(Page, unittest.TestCase):
     def wait_page_loaded(self):
         try:
             selector_css= self.locators.get('login_name')
-            WebDriverWait(self.driver, WAIT_TIME).until(EC.presence_of_element_located((By.CSS_SELECTOR, selector_css)),
-                                                    message='element not found: %s' % selector_css)
+            WebDriverWait(self.driver, self.conf.get('page_timeout')).until(EC.presence_of_element_located((By.CSS_SELECTOR, selector_css)),
+                                                    message='element timed out: %s' % selector_css)
         except TimeoutException as e:
             self.fail(e)
 
     def select_login(self):
-        el = self.driver.find_element_by_css_selector('#logInForm button')
-        el.click()
+        selector_css= '#logInForm button'
+        self.get_element_by_css(selector_css).click()
 
     def enter_user_name(self, name):
-        el = self.driver.find_element_by_css_selector(self.locators.get('login_name'))
-        el.send_keys(name)
+        selector_css = '#logInForm button'
+        self.get_element_by_css(selector_css).send_keys(name)
 

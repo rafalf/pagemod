@@ -70,16 +70,16 @@ class TestAcademy(unittest.TestCase):
 
         login.select_login()
 
-        el = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.CLASS_NAME, 'field-validation-error')))
+        el = login.get_validation_error()
+
         self.assertEqual(el.text, 'Please enter login name.')
 
         login.enter_user_name('user')
 
         login.select_login()
 
-        el = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.CLASS_NAME, 'field-validation-error')))
+        el = login.get_validation_error()
+
         self.assertEqual(el.text, 'Please enter a password.')
 
 if __name__ == "__main__":
