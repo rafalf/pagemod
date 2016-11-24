@@ -31,17 +31,26 @@ class Login(Page, unittest.TestCase):
 
     def wait_page_loaded(self):
         try:
-            selector_css= self.locators.get('login_name')
-            WebDriverWait(self.driver, self.conf.get('page_timeout')).until(EC.presence_of_element_located((By.CSS_SELECTOR, selector_css)),
+            selector_css = self.locators.get('login_name')
+            WebDriverWait(self.driver, int(self.conf.get('page_timeout'))).until(EC.presence_of_element_located((By.CSS_SELECTOR, selector_css)),
                                                     message='element timed out: %s' % selector_css)
         except TimeoutException as e:
             self.fail(e)
 
+    def log(f):
+        def wrapper(*args, **kwargs):
+            print('Method: {} before with args: {}'.format(f.__name__, args[1:]))
+            f(*args, **kwargs)
+            print('Method: {} after --> OK'.format(f.__name__))
+        return wrapper
+
+    @log
     def select_login(self):
-        selector_css= '#logInForm button'
+        selector_css = "#logInForm [type='submit']"
         self.get_element_by_css(selector_css).click()
 
+    @log
     def enter_user_name(self, name):
-        selector_css = '#logInForm button'
+        selector_css = '#LoginName'
         self.get_element_by_css(selector_css).send_keys(name)
 

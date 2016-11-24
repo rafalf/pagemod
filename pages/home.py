@@ -32,7 +32,7 @@ class Home(Page, unittest.TestCase):
     def wait_page_loaded(self):
         try:
             selector_css = self.locators.get('register')
-            WebDriverWait(self.driver, self.conf.get('page_timeout')).until(EC.presence_of_element_located((By.CSS_SELECTOR, selector_css)),
+            WebDriverWait(self.driver, int(self.conf.get('page_timeout'))).until(EC.presence_of_element_located((By.CSS_SELECTOR, selector_css)),
                                                     message='element timed out: %s' % selector_css)
         except TimeoutException as e:
             self.fail(e)
