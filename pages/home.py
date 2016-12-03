@@ -14,13 +14,13 @@
 
 
 import unittest
-from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from page import Page
 
+from utils import log
 
 class Home(Page, unittest.TestCase):
 
@@ -37,6 +37,7 @@ class Home(Page, unittest.TestCase):
         except TimeoutException as e:
             self.fail(e)
 
+    @log.log
     def select_get_involved(self):
         selector_css = self.locators.get('register')
         self.get_element_by_css(selector_css).click()

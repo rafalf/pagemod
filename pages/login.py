@@ -21,6 +21,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from page import Page
 
+from utils import log
+
 
 class Login(Page, unittest.TestCase):
 
@@ -37,19 +39,12 @@ class Login(Page, unittest.TestCase):
         except TimeoutException as e:
             self.fail(e)
 
-    def log(f):
-        def wrapper(*args, **kwargs):
-            print('Method: {} before with args: {}'.format(f.__name__, args[1:]))
-            f(*args, **kwargs)
-            print('Method: {} after --> OK'.format(f.__name__))
-        return wrapper
-
-    @log
+    @log.log
     def select_login(self):
         selector_css = "#logInForm [type='submit']"
         self.get_element_by_css(selector_css).click()
 
-    @log
+    @log.log
     def enter_user_name(self, name):
         selector_css = '#LoginName'
         self.get_element_by_css(selector_css).send_keys(name)

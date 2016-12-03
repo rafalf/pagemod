@@ -68,7 +68,7 @@ class TestAcademy(unittest.TestCase):
 if __name__ == "__main__":
 
     suite = unittest.TestSuite()
-    # suite.addTest(TestAcademy("test_01_register_validation"))
+    suite.addTest(TestAcademy("test_01_register_validation"))
     suite.addTest(TestAcademy("test_02_login_validation"))
     runner = unittest.TextTestRunner()
     runner.run(suite)
