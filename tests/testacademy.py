@@ -14,16 +14,9 @@
 
 
 import unittest
-import logging
-import sys
-import time
-from selenium import webdriver
-from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
 
 from utils import reader
+from utils import browser
 from pages.home import Home
 from pages.login import Login
 
@@ -33,20 +26,10 @@ class TestAcademy(unittest.TestCase):
     def setUp(self):
 
         self.conf = reader.get_conf()
-        self.browser = self.conf.get('browser', 'Safari')
         self.locators = reader.get_locators()
 
-        if self.browser == 'Firefox':
-            binary = FirefoxBinary(reader.get_conf().get('firefox_binary'))
-            self.driver = webdriver.Firefox(firefox_binary=binary)
-        elif self.browser == 'Chrome':
-            self.driver = webdriver.Chrome(reader.get_conf().get('chrome_driver'))
-        elif self.browser == 'Ie':
-            self.driver = webdriver.Ie(executable_path=reader.get_conf().get('ie_driver'))
-        elif self.browser == 'Safari':
-            self.driver = webdriver.Safari()
-
-        self.driver.get(self.conf.get('site_url'))
+        self.driver = browser.get_driver(self.conf)
+        self.driver.get(self.conf.get('apa_url', 'https://www.ammadoacademy.com'))
         self.driver.maximize_window()
 
     def tearDown(self):
