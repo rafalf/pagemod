@@ -12,6 +12,9 @@ __Ie:__
 * http://stackoverflow.com/questions/31134408/unable-to-find-element-on-closed-window-on-ie-11-working-with-selenium  - uncheck on all zones
 * https://github.com/SeleniumHQ/selenium/wiki/InternetExplorerDriver - win32 ( 62 bit is slow )
 
+__Safari:__
+* https://webkit.org/blog/6900/webdriver-support-in-safari-10/
+
 ## Main concepts:
 * actions (click, send_keys and so on): on the class page level
 * verifications (asserts): on the test level
