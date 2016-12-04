@@ -1,11 +1,11 @@
 import unittest
-from testacademy import TestAcademy
+from testacademy import TestAPAValidation
 import os
 import HTMLTestRunner
 
 
 def main():
-    search_tests = unittest.TestLoader().loadTestsFromTestCase(TestAcademy)
+    search_tests = unittest.TestLoader().loadTestsFromTestCase(TestAPAValidation)
     suite_tests = unittest.TestSuite([search_tests])
 
     with open(os.path.join(os.getcwd(), 'TestReport.html'), "w") as hlr:

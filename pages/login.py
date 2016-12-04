@@ -30,12 +30,8 @@ class Login(Page, unittest.TestCase):
         self.locators = locators
 
     def wait_page_loaded(self):
-        try:
-            selector_css= self.locators.get('login_name')
-            WebDriverWait(self.driver, self.conf.get('page_timeout')).until(EC.presence_of_element_located((By.CSS_SELECTOR, selector_css)),
-                                                    message='element timed out: %s' % selector_css)
-        except TimeoutException as e:
-            self.fail(e)
+        selector_css= self.locators.get('login_name')
+        self._wait_page_loaded(selector_css)
 
     def select_login(self):
         selector_css= '#logInForm button'

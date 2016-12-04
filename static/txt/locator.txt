@@ -1,2 +1,3 @@
-register::a[href='/register']
+get_involved::a[href='/register']
+register::a.overlayLink
 login_name::#LoginName

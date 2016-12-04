@@ -19,9 +19,10 @@ from utils import reader
 from utils import browser
 from pages.home import Home
 from pages.login import Login
+from pages.register import Register
 
 
-class TestAcademy(unittest.TestCase):
+class TestAPAValidation(unittest.TestCase):
 
     def setUp(self):
 
@@ -42,6 +43,18 @@ class TestAcademy(unittest.TestCase):
         home.wait_page_loaded()
 
         home.select_get_involved()
+
+        register = Register(self.driver, self.conf, self.locators)
+
+        register.select_register()
+
+        register.enter_email('bademail@')
+
+        register.select_next()
+
+        el = register.get_validation_error()
+
+        self.assertEqual(el.text, 'Please enter an email address in the format name@example.com.')
 
     def test_02_login_validation(self):
 
@@ -68,7 +81,7 @@ class TestAcademy(unittest.TestCase):
 if __name__ == "__main__":
 
     suite = unittest.TestSuite()
-    suite.addTest(TestAcademy("test_01_register_validation"))
-    suite.addTest(TestAcademy("test_02_login_validation"))
+    suite.addTest(TestAPAValidation("test_01_register_validation"))
+    suite.addTest(TestAPAValidation("test_02_login_validation"))
     runner = unittest.TextTestRunner()
     runner.run(suite)
