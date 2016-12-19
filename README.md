@@ -8,9 +8,11 @@ __Chrome driver - OS X:__
 * cp chromedriver /usr/local/bin
 
 __To test:__  
-```python```
-```from selenium import webdriver```
-```driver = webdriver.Chrome()```
+```
+python
+from selenium import webdriver
+driver = webdriver.Chrome()
+```
 
 __Firefox:__
 * https://github.com/mozilla/geckodriver/releases/
