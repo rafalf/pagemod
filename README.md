@@ -3,6 +3,15 @@
 __Chrome driver:__
 * https://sites.google.com/a/chromium.org/chromedriver/downloads
 
+__Chrome driver - OS X:__
+* https://sites.google.com/a/chromium.org/chromedriver/downloads
+* cp chromedriver /usr/local/bin
+
+__To test:__
+```python```
+```from selenium import webdriver```
+```driver = webdriver.Chrome()```
+
 __Firefox:__
 * https://github.com/mozilla/geckodriver/releases/
 * https://developer.mozilla.org/en-US/docs/Mozilla/QA/Marionette/WebDriver
