@@ -14,25 +14,20 @@
 
 
 import unittest
-import getopt
-import sys
-import time
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
 
 from utils import reader
 from utils import browser
+
 from pages.home import Home
 from pages.login import Login
+from pages.register import Register
 
 
-class TestAcademy(unittest.TestCase):
+class TestAPAValidation(unittest.TestCase):
 
     def setUp(self):
 
         self.conf = reader.get_conf()
-        self.browser = self.conf.get('browser', 'Safari')
         self.locators = reader.get_locators()
 
         self.driver = browser.get_driver()
@@ -51,32 +46,46 @@ class TestAcademy(unittest.TestCase):
 
         home.select_get_involved()
 
+        register = Register(self.driver, self.conf, self.locators)
+
+        register.select_register()
+
+        register.switch_to_registration_frame()
+
+        register.enter_email('bademail@')
+
+        register.select_next()
+
+        el = register.get_validation_error()
+
+        self.assertEqual(el.text, 'Please enter a valid email address.')
+
     def test_02_login_validation(self):
 
         login = Login(self.driver, self.conf, self.locators)
 
-        login.open_url(login.get_current_url() + '/login')
+        login.open_url(login.get_current_url() + 'login')
 
         login.wait_page_loaded()
 
         login.select_login()
 
-        el = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.CLASS_NAME, 'field-validation-error')))
+        el = login.get_validation_error()
+
         self.assertEqual(el.text, 'Please enter login name.')
 
         login.enter_user_name('user')
 
         login.select_login()
 
-        el = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.CLASS_NAME, 'field-validation-error')))
+        el = login.get_validation_error()
+
         self.assertEqual(el.text, 'Please enter a password.')
 
 if __name__ == "__main__":
 
     suite = unittest.TestSuite()
-    suite.addTest(TestAcademy("test_01_register_validation"))
-    suite.addTest(TestAcademy("test_02_login_validation"))
+    suite.addTest(TestAPAValidation("test_01_register_validation"))
+    suite.addTest(TestAPAValidation("test_02_login_validation"))
     runner = unittest.TextTestRunner()
     runner.run(suite)

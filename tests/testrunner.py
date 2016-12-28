@@ -1,16 +1,15 @@
 import unittest
-from testacademy import TestAcademy
+from testacademy import TestAPAValidation
 import os
 import HTMLTestRunner
 
 
 def main():
-    search_tests = unittest.TestLoader().loadTestsFromTestCase(TestAcademy)
+    search_tests = unittest.TestLoader().loadTestsFromTestCase(TestAPAValidation)
     suite_tests = unittest.TestSuite([search_tests])
 
-    dir = os.getcwd()
-    with open(os.path.join(os.getcwd(), 'TestReport.html'), "w") as hndlr:
-        runner = HTMLTestRunner.HTMLTestRunner(stream = hndlr,title = 'Test Report',description = 'Test Suite')
+    with open(os.path.join(os.getcwd(), 'TestReport.html'), "w") as hlr:
+        runner = HTMLTestRunner.HTMLTestRunner(stream=hlr, title='Test Report',description='Test Suite')
         runner.run(suite_tests)
 
 

@@ -16,5 +16,4 @@ def get_driver():
         driver = webdriver.Ie(executable_path=reader.get_conf().get('ie_driver'))
     elif browser == 'Safari':
         driver = webdriver.Safari()
-
     return driver
