@@ -14,9 +14,8 @@
 
 import os
 
-CWD = os.getcwd()
-RWD = os.path.join(CWD[:CWD.find('tests')], 'static', 'txt')
-PATH = lambda y: os.path.join(RWD, y)
+CWD = os.path.dirname(__file__)
+PATH = lambda y: os.path.join(CWD, y)
 
 
 def get_conf():
